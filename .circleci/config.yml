@@ -189,7 +189,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["91:fd:c0:be:fe:83:fa:b5:37:3b:8e:40:8e:9a:29:34"]
+          fingerprints: ["40:49:b3:11:9f:de:91:e9:05:02:cb:af:49:b5:ea:f6"]
       # - run:
       #     name: "Install Dependencies"
       #     command: |
@@ -255,7 +255,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["91:fd:c0:be:fe:83:fa:b5:37:3b:8e:40:8e:9a:29:34"]
+          fingerprints: ["40:49:b3:11:9f:de:91:e9:05:02:cb:af:49:b5:ea:f6"]
       - run:
           name: Deploy backend
           command: |
@@ -360,19 +360,19 @@ workflows:
       #     requires: [build-backend]
       # - scan-frontend:
       #     requires: [build-frontend]
-      - deploy-infrastructure:
-      #     # requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-          filters:
-            branches: 
-              only: [main]
-      # - configure-infrastructure:
-      #     requires: [deploy-infrastructure]
-      # - run-migrations:
-      #     requires: [configure-infrastructure]
-      # - deploy-frontend:
-      #     requires: [deploy-infrastructure]
-      # - deploy-backend:
-      #     requires: [run-migrations]
+      # - deploy-infrastructure:
+      # #     # requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+      #     filters:
+      #       branches: 
+      #         only: [main]
+      - configure-infrastructure
+          # requires: [deploy-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
+      - deploy-frontend
+          # requires: [deploy-infrastructure]
+      - deploy-backend:
+          requires: [run-migrations]
       # - smoke-test:
       #     requires: [deploy-backend, deploy-frontend]
       # - cloudfront-update:
