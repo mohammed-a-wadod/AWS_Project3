@@ -35,7 +35,7 @@ Resources:
       InstanceType: t2.micro
       SecurityGroups:
         - Ref: InstanceSecurityGroup
-      KeyName: TestingK1
+      KeyName: DeploymentKey
       ImageId: ami-068663a3c619dd892 
       Tags:
         - Key: Name
