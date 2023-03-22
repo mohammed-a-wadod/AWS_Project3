@@ -1,15 +1,21 @@
+# - name: Creates node_exporte_tmp
+#   become: True
+#   file:
+#     path: /node_exporte_tmp
+#     state: directory    
+
 - name: Creates node_exporte_tmp
   become: True
-  file:
-    path: /node_exporte_tmp
-    state: directory    
+  shell:
+    cmd: "wget https://github.com/prometheus/node_exporter/releases/download/v0.17.0/node_exporter-0.17.0.linux-amd64.tar.gz -P /node_exporte_tmp"
 
-- name: "install node exporter."
-  become: True
-  unarchive:
-    src: https://github.com/prometheus/node_exporter/releases/download/v0.17.0/node_exporter-0.17.0.linux-amd64.tar.gz
-    dest: /node_exporte_tmp
-    remote_src: yes
+
+# - name: "install node exporter."
+#   become: True
+#   unarchive:
+#     src: https://github.com/prometheus/node_exporter/releases/download/v0.17.0/node_exporter-0.17.0.linux-amd64.tar.gz
+#     dest: /node_exporte_tmp
+#     remote_src: yes
 
 # - name: "Download node exporter"
 #   become: True
