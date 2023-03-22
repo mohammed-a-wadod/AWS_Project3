@@ -1,20 +1,28 @@
-- name: Creates tmp
+- name: Creates node_exporte_tmp
   become: True
   file:
-    path: /tmp
+    path: /node_exporte_tmp
     state: directory    
 
-- name: "install node exporter."
+# - name: "install node exporter."
+#   become: True
+#   unarchive:
+#     src: https://github.com/prometheus/node_exporter/releases/download/v0.17.0/node_exporter-0.17.0.linux-amd64.tar.gz
+#     dest: /node_exporte_tmp
+#     remote_src: yes
+
+- name: "Download node exporter"
   become: True
-  unarchive:
-    src: https://github.com/prometheus/node_exporter/releases/download/v0.17.0/node_exporter-0.17.0.linux-amd64.tar.gz
-    dest: /tmp
-    remote_src: yes
+  ansible.builtin.get_url:
+    url: "https://github.com/prometheus/node_exporter/releases/download/v0.17.0/node_exporter-0.17.0.linux-amd64.tar.gz"
+    dest: "/node_exporte_tmp/node_exporter-0.17.0.linux-amd64.tar.gz"
+    mode: '0777'
+  # register: image_download_stats
 
 - name: "move binary to /usr/local/bin."
   become: true
   copy:
-    src: /tmp/node_exporter-0.17.0.linux-amd64/node_exporter
+    src: /node_exporte_tmp/node_exporter-0.17.0.linux-amd64/node_exporter
     dest: /usr/local/bin/node_exporter
     remote_src: yes
     mode: '0777'
