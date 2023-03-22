@@ -1,7 +1,8 @@
-- name: sudo usermod -aG docker root
+- name: Creates tmp
   become: True
-  shell:
-    cmd: "sudo mkdir /tmp"
+  file:
+    path: /tmp
+    state: directory    
 
 - name: "install node exporter."
   become: True
