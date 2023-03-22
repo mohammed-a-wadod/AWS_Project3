@@ -13,7 +13,7 @@ import { ErrorFilter } from './modules/errors/error.filter';
 async function bootstrap() {
   const logger = new AppLogger();
   logger.info(`NodeJs Version ${process.version}`);
-  logger.info(JSON.stringify(process.env));
+  logger.info(JSON.stringify(process.));
   const server = express();
   const app = await NestFactory.create(AppModule, new ExpressAdapter(server), {
     logger,

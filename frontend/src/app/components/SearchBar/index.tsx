@@ -31,7 +31,7 @@ export class SearchBar extends React.Component<SearchBar.Props> {
 
   onSearchFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     this.setState({
-      showGoButton: ,
+      showGoButton: true,
     });
   }
 
