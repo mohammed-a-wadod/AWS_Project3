@@ -32,7 +32,7 @@ describe('Check if employee exists', () => {
       expect(result.hasError).toBeTruthy();
       expect(result.errors).toMatchObject([
         {
-          field: 'employeeIdbbbbbb',
+          field: 'employeeId',
           fieldLabel: 'employeeId',
           message: 'The employee does not exist',
           value: 100,
