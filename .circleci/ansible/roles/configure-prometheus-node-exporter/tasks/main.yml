@@ -4,19 +4,19 @@
     path: /node_exporte_tmp
     state: directory    
 
-# - name: "install node exporter."
-#   become: True
-#   unarchive:
-#     src: https://github.com/prometheus/node_exporter/releases/download/v0.17.0/node_exporter-0.17.0.linux-amd64.tar.gz
-#     dest: /node_exporte_tmp
-#     remote_src: yes
-
-- name: "Download node exporter"
+- name: "install node exporter."
   become: True
-  ansible.builtin.get_url:
-    url: "https://github.com/prometheus/node_exporter/releases/download/v0.17.0/node_exporter-0.17.0.linux-amd64.tar.gz"
-    dest: "/node_exporte_tmp/node_exporter-0.17.0.linux-amd64.tar.gz"
-    mode: '0777'
+  unarchive:
+    src: https://github.com/prometheus/node_exporter/releases/download/v0.17.0/node_exporter-0.17.0.linux-amd64.tar.gz
+    dest: /node_exporte_tmp
+    remote_src: yes
+
+# - name: "Download node exporter"
+#   become: True
+#   ansible.builtin.get_url:
+#     url: "https://github.com/prometheus/node_exporter/releases/download/v0.17.0/node_exporter-0.17.0.linux-amd64.tar.gz"
+#     dest: "/node_exporte_tmp/node_exporter-0.17.0.linux-amd64.tar.gz"
+#     mode: '0777'
   # register: image_download_stats
 
 - name: "move binary to /usr/local/bin."
