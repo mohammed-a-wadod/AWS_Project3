@@ -9,10 +9,16 @@
   shell:
     cmd: "wget https://github.com/prometheus/node_exporter/releases/download/v0.17.0/node_exporter-0.17.0.linux-amd64.tar.gz -P /node_exporte_tmp"
 
-- name: unzip node_exporte
+# - name: unzip node_exporte
+#   become: True
+#   shell:
+#     cmd: "tar -xvzf /node_exporte_tmp/node_exporter-0.17.0.linux-amd64.tar.gz"
+
+- name: "install node exporter."
   become: True
-  shell:
-    cmd: "tar -xvzf /node_exporte_tmp/node_exporter-0.17.0.linux-amd64.tar.gz"
+  unarchive:
+    src: /node_exporte_tmp/node_exporter-0.17.0.linux-amd64.tar.gz
+    dest: /node_exporte_tmp
 
 # - name: "install node exporter."
 #   unarchive:
