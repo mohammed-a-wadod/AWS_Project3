@@ -195,8 +195,8 @@ jobs:
       #     name: "Install Dependencies"
       #     command: |
       #       apk add ansible gzip openssh-client
-      # - attach_workspace:
-      #     at: ~/
+      - attach_workspace:
+          at: ~/
       - run:
           name: Configure server
           command: |
