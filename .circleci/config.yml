@@ -69,6 +69,7 @@ jobs:
             exit 0
             cd frontend
             npm run build:prod
+            npm i --package-lock-only
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
