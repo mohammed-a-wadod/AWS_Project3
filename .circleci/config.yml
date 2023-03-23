@@ -130,6 +130,7 @@ jobs:
       - run:
           name: Scan front-end
           command: |
+            pwd
             npm audit
 
   scan-backend:
