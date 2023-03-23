@@ -15,9 +15,9 @@ commands:
           name: Destroy environment
           when: on_fail
           command: |
-            aws cloudformation delete-stack --stack-name backend-97c8e
-            aws s3 rm s3://udapeople-97c8e --recursive
-            aws cloudformation delete-stack --stack-name frontend-97c8e
+            aws cloudformation delete-stack --stack-name backend-${CIRCLE_WORKFLOW_ID:0:5}
+            aws s3 rm s3://udapeople-<<parameters.Workflow_ID>> --recursive
+            aws cloudformation delete-stack --stack-name frontend-<< parameters.Workflow_ID >>
   notify_on_failure:
       steps:
         - slack/notify:
@@ -359,20 +359,20 @@ workflows:
       #     requires: [build-backend]
       # - scan-frontend:
       #     requires: [build-frontend]
-      # - deploy-infrastructure:
-      # #     # requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-      #     filters:
-      #       branches: 
-      #         only: [main, test-feature-branch]
-      # - configure-infrastructure:
-      #     requires: [deploy-infrastructure]
-      # - run-migrations:
-      #     requires: [configure-infrastructure]
-      # - deploy-frontend:
-      #     requires: [configure-infrastructure]
-      # - deploy-backend:
-      #     requires: [run-migrations]
-      - smoke-test
+      - deploy-infrastructure:
+      #     # requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          filters:
+            branches: 
+              only: [main, test-feature-branch]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
+      - deploy-frontend:
+          requires: [configure-infrastructure]
+      - deploy-backend:
+          requires: [run-migrations]
+      # - smoke-test
       # #     requires: [deploy-backend, deploy-frontend]
       # - cloudfront-update: 
       #     requires: [configure-infrastructure]
