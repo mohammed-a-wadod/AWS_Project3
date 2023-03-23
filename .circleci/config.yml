@@ -195,8 +195,8 @@ jobs:
       #     name: "Install Dependencies"
       #     command: |
       #       apk add ansible gzip openssh-client
-      # - attach_workspace:
-      #     at: ~/
+      - attach_workspace:
+          at: ~/
       - run:
           name: Configure server
           command: |
@@ -245,9 +245,7 @@ jobs:
             echo "API_URL=http://$BACKEND_PUBLIC_IP:3030" > .env
             npm install
             npm run build:prod
-            # aws s3 sync dist s3://udapeople-project
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:5} --recursive
-
 #       # Here's where you will add some code to rollback on failure      
                     
   deploy-backend:
@@ -347,36 +345,35 @@ jobs:
               aws cloudformation delete-stack --stack-name "frontend-${OldWorkflowID}"
             fi
             
-
 workflows:
   default:
     jobs:
-      # - build-frontend
-      # - build-backend
-      # - test-frontend:
-      #     requires: [build-frontend]
-      # - test-backend:
-      #     requires: [build-backend]
-      # - scan-backend:
-      #     requires: [build-backend]
-      # - scan-frontend:
-          # requires: [build-frontend]
-      - deploy-infrastructure:
-      #     # requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-          filters:
-            branches: 
-              only: [main]
-      - configure-infrastructure:
-          requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [configure-infrastructure]
-      - deploy-frontend:
-          requires: [configure-infrastructure]
-      - deploy-backend:
-          requires: [run-migrations]
+      - build-frontend
+      - build-backend
+      - test-frontend:
+          requires: [build-frontend]
+      - test-backend:
+          requires: [build-backend]
+      - scan-backend:
+          requires: [build-backend]
+      - scan-frontend:
+          requires: [build-frontend]
+      # - deploy-infrastructure:
+      # #     # requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+      #     filters:
+      #       branches: 
+      #         only: [main, test-feature-branch]
+      # - configure-infrastructure:
+      #     requires: [deploy-infrastructure]
+      # - run-migrations:
+      #     requires: [configure-infrastructure]
+      # - deploy-frontend:
+      #     requires: [configure-infrastructure]
+      # - deploy-backend:
+      #     requires: [run-migrations]
       # - smoke-test
       # #     requires: [deploy-backend, deploy-frontend]
-      - cloudfront-update: 
-          requires: [configure-infrastructure]
+      # - cloudfront-update: 
+      #     requires: [configure-infrastructure]
       # - cleanup
       #     requires: [cloudfront-update]
