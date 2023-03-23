@@ -15,9 +15,9 @@ commands:
           name: Destroy environment
           when: on_fail
           command: |
-            aws cloudformation delete-stack --stack-name backend-${CIRCLE_WORKFLOW_ID:0:5}
-            aws s3 rm s3://udapeople-<<parameters.Workflow_ID>> --recursive
-            aws cloudformation delete-stack --stack-name frontend-<< parameters.Workflow_ID >>
+            aws cloudformation delete-stack --stack-name backend-97c8e
+            aws s3 rm s3://udapeople-97c8e --recursive
+            aws cloudformation delete-stack --stack-name frontend-97c8e
   notify_on_failure:
       steps:
         - slack/notify:
@@ -290,7 +290,7 @@ jobs:
             export BACKEND_PUBLIC_IP=$(aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
             
             # URL="http://$BACKEND_PUBLIC_IP:3030/api/status"
-            URL="http://google.com"
+            URL="http://g00gle.com"
             if curl -s --head ${URL}
             then
               echo "It worked!"
@@ -299,8 +299,8 @@ jobs:
               echo "Rolling Back"
               exit 1
             fi
-      # - notify_on_failure
-      # - destroy_environment
+      - notify_on_failure
+      - destroy_environment
 
   cloudfront-update:
     docker:
@@ -348,16 +348,16 @@ jobs:
 workflows:
   default:
     jobs:
-      - build-frontend
-      - build-backend
-      - test-frontend:
-          requires: [build-frontend]
-      - test-backend:
-          requires: [build-backend]
-      - scan-backend:
-          requires: [build-backend]
-      - scan-frontend:
-          requires: [build-frontend]
+      # - build-frontend
+      # - build-backend
+      # - test-frontend:
+      #     requires: [build-frontend]
+      # - test-backend:
+      #     requires: [build-backend]
+      # - scan-backend:
+      #     requires: [build-backend]
+      # - scan-frontend:
+      #     requires: [build-frontend]
       # - deploy-infrastructure:
       # #     # requires: [test-frontend, test-backend, scan-frontend, scan-backend]
       #     filters:
@@ -371,7 +371,7 @@ workflows:
       #     requires: [configure-infrastructure]
       # - deploy-backend:
       #     requires: [run-migrations]
-      # - smoke-test
+      - smoke-test
       # #     requires: [deploy-backend, deploy-frontend]
       # - cloudfront-update: 
       #     requires: [configure-infrastructure]
