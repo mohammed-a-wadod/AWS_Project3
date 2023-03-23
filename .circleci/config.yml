@@ -245,9 +245,7 @@ jobs:
             echo "API_URL=http://$BACKEND_PUBLIC_IP:3030" > .env
             npm install
             npm run build:prod
-            # aws s3 sync dist s3://udapeople-project
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:5} --recursive
-
 #       # Here's where you will add some code to rollback on failure      
                     
   deploy-backend:
